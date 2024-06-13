@@ -1,5 +1,5 @@
 import { expect, type Page } from '@playwright/test';
-import { DonationPoint } from '../types/donationPoint';
+import { DonationPoint } from '../types/donationPoint.type';
 
 export class RegisterPage {
     readonly page: Page;
@@ -12,7 +12,7 @@ export class RegisterPage {
         await this.page.locator('a[href="/signup"]').click();
         
         const title = this.page.locator('h1')
-        await expect(title).toContainText(/Cadastro de ponto de doação/);
+        await expect(title).toHaveText(/Cadastro de ponto de doação/);
     }
 
     async fillForm(donationPoint: DonationPoint) {
@@ -32,11 +32,11 @@ export class RegisterPage {
 
     async verifySuccess(success: string) {
         const msgSuccess = this.page.locator('h1')
-        await expect(msgSuccess).toContainText(success);
+        await expect(msgSuccess).toHaveText(success);
     }
 
-    async verifyError(error: string) {
+    async verifyError(error: string | string[]) {
         const msgError = this.page.locator('.alert-error')
-        await expect(msgError).toContainText(error);
+        await expect(msgError).toHaveText(error);
     }
 }

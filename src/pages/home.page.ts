@@ -13,6 +13,6 @@ export class HomePage {
 
     async seeInHome(message: string) {
         const homeTitle = this.page.locator('h1');
-        await expect(homeTitle).toContainText(message);
+        await expect(homeTitle).toHaveText(message);
     }
 }
