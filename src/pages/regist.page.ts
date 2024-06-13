@@ -1,5 +1,5 @@
 import { expect, type Page } from '@playwright/test';
-import { donationPoint } from '../types/donationPoint';
+import { DonationPoint } from '../types/donationPoint';
 
 export class RegisterPage {
     readonly page: Page;
@@ -10,12 +10,12 @@ export class RegisterPage {
 
     async goToRegister() {
         await this.page.locator('a[href="/signup"]').click();
-        const title = this.page.locator('h1')
         
+        const title = this.page.locator('h1')
         await expect(title).toContainText(/Cadastro de ponto de doação/);
     }
 
-    async fillForm(donationPoint: donationPoint) {
+    async fillForm(donationPoint: DonationPoint) {
         await this.page.fill('input[name="name"]', donationPoint.name);
         await this.page.fill('input[name="email"]', donationPoint.email);
         await this.page.fill('input[name="cep"]', donationPoint.cep);

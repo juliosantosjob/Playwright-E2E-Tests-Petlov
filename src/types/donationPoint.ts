@@ -1,5 +1,5 @@
 
-export interface donationPoint {
+export interface DonationPoint {
     name: string;
     email: string;
     cep: string;
