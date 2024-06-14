@@ -1,42 +1,34 @@
-import { expect, type Page } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { DonationPoint } from '../types/donationPoint.type';
+import { RegisterLocators } from '../locators/regist.locator';
 
-export class RegisterPage {
-    readonly page: Page;
-
-    constructor(page: Page) {
-        this.page = page;
-    }
+export class RegisterPage extends RegisterLocators {
 
     async goToRegister() {
-        await this.page.locator('a[href="/signup"]').click();
-        
-        const title = this.page.locator('h1')
-        await expect(title).toHaveText(/Cadastro de ponto de doação/);
+        await this.btn_signUp.click();
+        await expect(this.fld_message).toHaveText(/Cadastro de ponto de doação/);
     }
 
-    async fillForm(donationPoint: DonationPoint) {
-        await this.page.fill('input[name="name"]', donationPoint.name);
-        await this.page.fill('input[name="email"]', donationPoint.email);
-        await this.page.fill('input[name="cep"]', donationPoint.cep);
+    async fillForm(donation: DonationPoint) {
+        await this.fld_name.fill(donation.name);
+        await this.fld_email.fill(donation.email);
+        await this.fld_zipCode.fill(donation.cep);
 
-        await this.page.click('input[type="button"]');
-        await this.page.fill('input[name="addressNumber"]', donationPoint.addressNumber);
-        await this.page.fill('input[name="addressDetails"]', donationPoint.addressDetails);
-        await this.page.click('img[alt="Cachorros"]');
+        await this.btn_searchZipeCode.click()
+        await this.fld_addressNumber.fill(donation.addressNumber);
+        await this.fld_addressDetails.fill(donation.addressDetails);
+        await this.img_dog.click();
     }
 
     async submitForm() {
-        await this.page.click('button[type="submit"]');
+        await this.btn_submit.click();
     }
 
     async verifySuccess(success: string) {
-        const msgSuccess = this.page.locator('h1')
-        await expect(msgSuccess).toHaveText(success);
+        await expect(this.fld_message).toHaveText(success);
     }
 
     async verifyError(error: string | string[]) {
-        const msgError = this.page.locator('.alert-error')
-        await expect(msgError).toHaveText(error);
+        await expect(this.fld_alertError).toHaveText(error);
     }
 }

@@ -1,18 +1,13 @@
-import { Page, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { HomeLocators } from '../locators/home.locator';
 
-export class HomePage {
-    private page: Page;
-
-    constructor(page: Page) {
-        this.page = page;
-    }
+export class HomePage extends HomeLocators {
 
     async openHome() {
         await this.page.goto('/');
     }
 
     async seeInHome(message: string) {
-        const homeTitle = this.page.locator('h1');
-        await expect(homeTitle).toHaveText(message);
+        await expect(this.homeTitle).toHaveText(message);
     }
 }
