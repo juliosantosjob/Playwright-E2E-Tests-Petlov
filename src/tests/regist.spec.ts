@@ -40,14 +40,14 @@ test.describe('Donation point registration', () => {
   });
 
   test('Should not register with an invalid address number', async () => {
-    donationPoint.addressNumber = '00000';
+    donationPoint.addressNumber = '0';
 
     await registerPage.fillForm(donationPoint);
     await registerPage.submitForm();
     await registerPage.verifyError('Informe um número maior que zero');
   });
 
-  test('Errors in registration with all fields blank', async () => {
+  test('Errors in registration with all fields empty', async () => {
     const errorMessages = [
       'Informe o seu nome completo',
       'Informe o seu melhor email',
