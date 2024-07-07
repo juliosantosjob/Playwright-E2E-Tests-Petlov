@@ -1,18 +1,17 @@
-import { test } from '@playwright/test';
+import test from '../samples/fixtures';
 import { HomePage } from '../pages/home.page';
 import { RegisterPage } from '../pages/regist.page';
-import { createDonationPoint } from '../samples/regist.sample';
-import { DonationPoint } from '../types/donationPoint.type';
+import { DonationPoint } from '../samples/fixtures';
 
 test.describe('Donation point registration', () => {
   let homePage: HomePage;
   let registerPage: RegisterPage;
   let donationPoint: DonationPoint;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, createDonationPoint }) => {
+    donationPoint = await createDonationPoint();
     homePage = new HomePage(page);
     registerPage = new RegisterPage(page);
-    donationPoint = createDonationPoint();
 
     await homePage.openHome();
     await registerPage.goToRegister();
@@ -40,7 +39,7 @@ test.describe('Donation point registration', () => {
   });
 
   test('Should not register with an invalid address number', async () => {
-    donationPoint.addressNumber = '0';
+    donationPoint.addressNumber = '00000';
 
     await registerPage.fillForm(donationPoint);
     await registerPage.submitForm();

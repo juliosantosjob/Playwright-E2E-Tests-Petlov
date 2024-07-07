@@ -1,34 +1,34 @@
 import { expect } from '@playwright/test';
-import { DonationPoint } from '../types/donationPoint.type';
+import { DonationPoint } from '../samples/fixtures';
 import { RegisterLocators } from '../locators/regist.locator';
 
 export class RegisterPage extends RegisterLocators {
 
     async goToRegister() {
-        await this.btn_signUp.click();
-        await expect(this.fld_message).toHaveText(/Cadastro de ponto de doação/);
+        await this.linkSignUp.click();
+        await expect(this.headingMessage).toHaveText(/Cadastro de ponto de doação/);
     }
 
     async fillForm(donation: DonationPoint) {
-        await this.fld_name.fill(donation.name);
-        await this.fld_email.fill(donation.email);
-        await this.fld_zipCode.fill(donation.cep);
+        await this.inputName.fill(donation.name);
+        await this.inputEmail.fill(donation.email);
+        await this.inputZipCode.fill(donation.cep);
 
-        await this.btn_searchZipeCode.click()
-        await this.fld_addressNumber.fill(donation.addressNumber);
-        await this.fld_addressDetails.fill(donation.addressDetails);
-        await this.img_dog.click();
+        await this.buttonSearchZipCode.click();
+        await this.inputAddressNumber.fill(donation.addressNumber);
+        await this.inputAddressDetails.fill(donation.addressDetails);
+        await this.imageDog.click();
     }
 
     async submitForm() {
-        await this.btn_submit.click();
+        await this.buttonSubmit.click();
     }
 
     async verifySuccess(success: string) {
-        await expect(this.fld_message).toHaveText(success);
+        await expect(this.headingMessage).toHaveText(success);
     }
 
     async verifyError(error: string | string[]) {
-        await expect(this.fld_alertError).toHaveText(error);
+        await expect(this.divAlertError).toHaveText(error);
     }
 }
